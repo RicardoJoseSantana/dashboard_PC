@@ -11,18 +11,17 @@ const Header: React.FC = () => {
         </div>
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white uppercase font-mono">
-            Lock Control <span className="text-scada-accent">Dashboard</span>
+            Control de <span className="text-scada-accent">Esclusas</span>
           </h1>
-          <p className="text-xs text-slate-400 font-mono tracking-widest">INDUSTRIAL AUTOMATION HMI // V1.0.4</p>
         </div>
       </div>
       <div className="flex items-center gap-6 text-sm font-mono text-slate-400 bg-scada-panel px-4 py-2 rounded border border-scada-border">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-          <span>SYSTEM ONLINE</span>
+          <span>SISTEMA EN LÍNEA</span>
         </div>
         <div className="border-l border-scada-border pl-6">
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{new Date().toLocaleDateString('es-ES')}</span>
         </div>
       </div>
     </header>

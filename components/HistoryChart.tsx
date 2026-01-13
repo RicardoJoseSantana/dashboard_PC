@@ -10,7 +10,7 @@ interface HistoryChartProps {
 const HistoryChart: React.FC<HistoryChartProps> = ({ data }) => {
   return (
     <Card 
-        title="Level History Trends" 
+        title="Histórico de Niveles" 
         className="h-[400px]"
         icon={<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>}
     >
@@ -31,7 +31,7 @@ const HistoryChart: React.FC<HistoryChartProps> = ({ data }) => {
                 stroke="#94a3b8" 
                 tick={{fill: '#94a3b8', fontSize: 10}} 
                 domain={[0, 100]}
-                label={{ value: 'Level (%)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }}
+                label={{ value: 'Nivel (%)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }}
             />
             <Tooltip 
                 contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#f1f5f9' }}
@@ -39,10 +39,10 @@ const HistoryChart: React.FC<HistoryChartProps> = ({ data }) => {
                 labelStyle={{ color: '#94a3b8', marginBottom: 5 }}
             />
             <Legend verticalAlign="top" height={36} iconType="plainline" />
-            <Line type="monotone" dataKey="lock1" name="Lock 1" stroke="#0ea5e9" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
-            <Line type="monotone" dataKey="lock2" name="Lock 2" stroke="#22c55e" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="lock3" name="Lock 3" stroke="#f59e0b" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="lock4" name="Lock 4" stroke="#d946ef" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="lock1" name="Esclusa 1" stroke="#0ea5e9" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+            <Line type="monotone" dataKey="lock2" name="Esclusa 2" stroke="#22c55e" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="lock3" name="Esclusa 3" stroke="#f59e0b" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="lock4" name="Esclusa 4" stroke="#d946ef" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

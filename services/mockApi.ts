@@ -65,10 +65,10 @@ export const fetchLevels = async (): Promise<LockLevel[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
-        { id: 1, name: 'Lock 1 (Entry)', level: currentLevels[0], status: getStatus(currentLevels[0]) },
-        { id: 2, name: 'Lock 2', level: currentLevels[1], status: getStatus(currentLevels[1]) },
-        { id: 3, name: 'Lock 3', level: currentLevels[2], status: getStatus(currentLevels[2]) },
-        { id: 4, name: 'Lock 4 (Exit)', level: currentLevels[3], status: getStatus(currentLevels[3]) },
+        { id: 1, name: 'Esclusa 1 (Entrada)', level: currentLevels[0], status: getStatus(currentLevels[0]) },
+        { id: 2, name: 'Esclusa 2', level: currentLevels[1], status: getStatus(currentLevels[1]) },
+        { id: 3, name: 'Esclusa 3', level: currentLevels[2], status: getStatus(currentLevels[2]) },
+        { id: 4, name: 'Esclusa 4 (Salida)', level: currentLevels[3], status: getStatus(currentLevels[3]) },
       ]);
     }, 100);
   });

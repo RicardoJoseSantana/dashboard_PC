@@ -1,5 +1,5 @@
 {
-  "name": "Lock Control SCADA Dashboard",
-  "description": "A professional industrial HMI/SCADA dashboard for monitoring and controlling lock systems with real-time visualization and historical data analysis.",
+  "name": "Panel SCADA de Control de Esclusas",
+  "description": "Un panel HMI/SCADA industrial profesional para monitorear y controlar sistemas de esclusas con visualización en tiempo real y análisis de datos históricos.",
   "requestFramePermissions": []
 }

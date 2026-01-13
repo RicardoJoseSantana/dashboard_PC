@@ -22,7 +22,7 @@ export default function App() {
       setSystemStatus(status);
       setLockLevels(levels);
     } catch (error) {
-      console.error("Failed to fetch real-time data", error);
+      console.error("Error al obtener datos en tiempo real", error);
     }
   }, []);
 
@@ -31,7 +31,7 @@ export default function App() {
       const history = await fetchHistory();
       setHistoryData(history);
     } catch (error) {
-      console.error("Failed to fetch history", error);
+      console.error("Error al obtener historial", error);
     }
   }, []);
 
@@ -63,7 +63,7 @@ export default function App() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-scada-bg text-scada-accent">
-        <div className="text-xl font-mono animate-pulse">INITIALIZING SYSTEM...</div>
+        <div className="text-xl font-mono animate-pulse">INICIANDO SISTEMA...</div>
       </div>
     );
   }
