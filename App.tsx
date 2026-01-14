@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState, useCallback } from 'react';
 import Header from './components/Header';
 import StatusPanel from './components/StatusPanel';
 import LockVisualizer from './components/LockVisualizer';
 import ControlPanel from './components/ControlPanel';
+import HydraulicPanel from './components/HydraulicPanel';
 import HistoryChart from './components/HistoryChart';
 import { fetchLevels, fetchSystemStatus, fetchHistory } from './services/mockApi';
 import { SystemStatus, LockLevel, HistoricalData } from './types';
@@ -72,20 +74,30 @@ export default function App() {
     <div className="min-h-screen bg-scada-bg text-scada-text font-sans p-4 md:p-6 lg:p-8 flex flex-col gap-6">
       <Header />
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Visualization (Takes more space on large screens) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Visualization and History */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-          <LockVisualizer levels={lockLevels} />
+          <LockVisualizer 
+            levels={lockLevels} 
+            valves={systemStatus?.valves}
+          />
           <HistoryChart data={historyData} />
         </div>
 
-        {/* Right Column: Status & Controls */}
+        {/* Right Column: Status & Operations */}
         <div className="lg:col-span-4 flex flex-col gap-6">
           <StatusPanel status={systemStatus} />
+          
           <ControlPanel 
             pumpState={systemStatus?.pumpActive || false} 
             onActionTriggered={refreshData} 
           />
+          
+          <HydraulicPanel 
+              pumpActive={systemStatus?.pumpActive || false}
+              valves={systemStatus?.valves || [false, false, false]}
+              onActionTriggered={refreshData}
+           />
         </div>
       </div>
     </div>

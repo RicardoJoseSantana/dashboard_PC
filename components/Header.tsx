@@ -6,7 +6,11 @@ const Header: React.FC = () => {
       <div className="flex items-center gap-4">
         <div className="w-10 h-10 bg-scada-accent rounded-sm flex items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.3)]">
            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+             {/* Wifi Waves */}
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 6a6 6 0 0 1 8 0" />
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3a11 11 0 0 1 14 0" />
+             {/* Water Drop */}
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 22C9.24 22 7 19.76 7 17C7 13.5 12 9 12 9S17 13.5 17 17C17 19.76 14.76 22 12 22Z" />
            </svg>
         </div>
         <div>
