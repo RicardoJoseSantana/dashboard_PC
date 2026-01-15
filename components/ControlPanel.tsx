@@ -1,8 +1,8 @@
 
 import React from 'react';
-import Card from './Card';
-import { ControlCommand } from '../types';
-import { sendCommand } from '../services/mockApi';
+import Card from './Card.tsx';
+import { ControlCommand } from '../types.ts';
+import { sendCommand } from '../services/mockApi.ts';
 
 interface ControlPanelProps {
   pumpState: boolean; 

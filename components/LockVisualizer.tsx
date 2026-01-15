@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Card from './Card';
-import { LockLevel } from '../types';
+import Card from './Card.tsx';
+import { LockLevel } from '../types.ts';
 
 interface LockVisualizerProps {
   levels: LockLevel[];

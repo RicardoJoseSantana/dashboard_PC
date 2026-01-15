@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Card from './Card';
-import { HistoricalData } from '../types';
+import Card from './Card.tsx';
+import { HistoricalData } from '../types.ts';
 
 interface HistoryChartProps {
   data: HistoricalData[];

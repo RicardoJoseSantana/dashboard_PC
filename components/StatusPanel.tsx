@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Card from './Card';
-import { SystemStatus } from '../types';
+import Card from './Card.tsx';
+import { SystemStatus } from '../types.ts';
 
 interface StatusPanelProps {
   status: SystemStatus | null;

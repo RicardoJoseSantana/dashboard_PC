@@ -1,4 +1,5 @@
-import { ControlCommand, HistoricalData, LockLevel, SystemStatus } from '../types';
+
+import { ControlCommand, HistoricalData, LockLevel, SystemStatus } from '../types.ts';
 
 // State simulation
 let currentLevels = [20, 45, 60, 10]; // Initial levels

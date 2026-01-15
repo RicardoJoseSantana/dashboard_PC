@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
-import Header from './components/Header';
-import StatusPanel from './components/StatusPanel';
-import LockVisualizer from './components/LockVisualizer';
-import ControlPanel from './components/ControlPanel';
-import HydraulicPanel from './components/HydraulicPanel';
-import HistoryChart from './components/HistoryChart';
-import { fetchLevels, fetchSystemStatus, fetchHistory } from './services/mockApi';
-import { SystemStatus, LockLevel, HistoricalData } from './types';
+import Header from './components/Header.tsx';
+import StatusPanel from './components/StatusPanel.tsx';
+import LockVisualizer from './components/LockVisualizer.tsx';
+import ControlPanel from './components/ControlPanel.tsx';
+import HydraulicPanel from './components/HydraulicPanel.tsx';
+import HistoryChart from './components/HistoryChart.tsx';
+import { fetchLevels, fetchSystemStatus, fetchHistory } from './services/mockApi.ts';
+import { SystemStatus, LockLevel, HistoricalData } from './types.ts';
 
 export default function App() {
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
