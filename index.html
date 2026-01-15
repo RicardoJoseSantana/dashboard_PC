@@ -4,41 +4,205 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel SCADA de Control de Esclusas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Montserrat', 'sans-serif'],
-              mono: ['Roboto Mono', 'monospace'],
-            },
-            colors: {
-              scada: {
-                bg: '#0f172a', // Slate 950
-                panel: '#1e293b', // Slate 800
-                border: '#334155', // Slate 700
-                text: '#e2e8f0', // Slate 200
-                accent: '#0ea5e9', // Sky 500
-                success: '#22c55e', // Green 500
-                danger: '#ef4444', // Red 500
-                warning: '#f59e0b', // Amber 500
-              }
-            },
-            animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            }
-          },
-        },
-      }
-    </script>
     <style>
+      :root {
+        --scada-bg: #0f172a;
+        --scada-panel: #1e293b;
+        --scada-border: #334155;
+        --scada-text: #e2e8f0;
+        --scada-accent: #0ea5e9;
+        --scada-success: #22c55e;
+        --scada-danger: #ef4444;
+        --scada-warning: #f59e0b;
+        --scada-muted: #64748b;
+        --font-sans: 'Montserrat', sans-serif;
+        --font-mono: 'Roboto Mono', monospace;
+      }
+
+      * { box-sizing: border-box; }
+      
       body {
-        background-color: #0f172a;
-        color: #e2e8f0;
+        background-color: var(--scada-bg);
+        color: var(--scada-text);
+        font-family: var(--font-sans);
+        margin: 0;
+      }
+
+      /* Layout Utilities */
+      .container-fluid { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
+      .container { max-width: 1920px; margin: 0 auto; padding: 1.5rem; width: 100%; }
+      .flex { display: flex; }
+      .flex-col { display: flex-direction: column; }
+      .items-center { align-items: center; }
+      .justify-between { justify-content: space-between; }
+      .justify-center { justify-content: center; }
+      .gap-2 { gap: 0.5rem; }
+      .gap-4 { gap: 1rem; }
+      .gap-6 { gap: 1.5rem; }
+      .h-full { height: 100%; }
+      .w-full { width: 100%; }
+      .hidden { display: none; }
+      
+      /* Grid System replacement */
+      .grid-layout { display: flex; flex-direction: column; gap: 1.5rem; }
+      .row { display: flex; gap: 1.5rem; flex-direction: column; }
+      @media (min-width: 1280px) {
+        .row { flex-direction: row; }
+        .col-3-4 { flex: 3; }
+        .col-1-4 { flex: 1; }
+        .col-1-2 { flex: 1; }
+      }
+      .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+      @media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+      
+      /* Header Styles */
+      .app-header {
+        position: sticky; top: 0; z-index: 100;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--scada-border);
+        padding: 0.75rem 1.5rem;
+        display: flex; justify-content: space-between; align-items: center;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+      }
+      .logo-section { display: flex; align-items: center; gap: 1rem; }
+      .logo-icon { 
+        width: 2.5rem; height: 2.5rem; background: var(--scada-accent); 
+        border-radius: 4px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+      }
+      .app-title h1 { margin: 0; font-family: var(--font-mono); font-size: 1.25rem; text-transform: uppercase; line-height: 1; }
+      .app-title span { font-size: 0.65rem; color: var(--scada-muted); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 4px; }
+      
+      /* Nav Styles */
+      .nav-group {
+        background: rgba(30, 41, 59, 0.5); padding: 4px; border-radius: 8px;
+        border: 1px solid rgba(51, 65, 85, 0.5); display: flex; gap: 4px;
+      }
+      .nav-btn {
+        background: transparent; border: none; color: var(--scada-muted);
+        padding: 6px 16px; border-radius: 6px; cursor: pointer;
+        font-family: var(--font-mono); font-size: 0.75rem; font-weight: bold;
+        text-transform: uppercase; display: flex; align-items: center; gap: 8px;
+        transition: all 0.2s;
+      }
+      .nav-btn.active { background: var(--scada-accent); color: white; }
+      .nav-btn:hover:not(.active) { color: white; background: rgba(255,255,255,0.05); }
+
+      /* Card Styles */
+      .scada-card {
+        background: var(--scada-panel); border: 1px solid var(--scada-border);
+        border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+      }
+      .card-header {
+        background: rgba(15, 23, 42, 0.5); padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--scada-border);
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .card-title {
+        font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600;
+        letter-spacing: 0.05em; color: var(--scada-text); text-transform: uppercase;
+        margin: 0; display: flex; align-items: center; gap: 8px;
+      }
+      .card-body { padding: 1rem; flex: 1; position: relative; }
+
+      /* Components */
+      .btn {
+        width: 100%; padding: 1rem; border: none; border-radius: 6px;
+        color: white; font-weight: bold; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.875rem;
+        transition: transform 0.1s; position: relative; overflow: hidden;
+      }
+      .btn:active { transform: translateY(2px); }
+      .btn-success { background: var(--scada-success); box-shadow: 0 4px 6px rgba(22, 101, 52, 0.2); }
+      .btn-primary { background: #2563eb; border: 1px solid rgba(30, 64, 175, 0.5); }
+      .btn-danger { background: var(--scada-danger); animation: pulse 2s infinite; }
+      
+      .control-row {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0.75rem; background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--scada-border); border-radius: 6px; margin-bottom: 0.75rem;
+      }
+      
+      .switch {
+        width: 3rem; height: 1.75rem; background: #334155; border-radius: 99px;
+        position: relative; cursor: pointer; border: none; transition: background 0.3s;
+      }
+      .switch-knob {
+        width: 1.25rem; height: 1.25rem; background: white; border-radius: 50%;
+        position: absolute; top: 0.25rem; left: 0.25rem; transition: transform 0.3s;
+      }
+      .switch.active { background: var(--scada-accent); box-shadow: 0 0 10px rgba(14, 165, 233, 0.5); }
+      .switch.active-green { background: var(--scada-success); box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+      .switch.active .switch-knob, .switch.active-green .switch-knob { transform: translateX(1.25rem); }
+
+      /* Visualizer Specifics */
+      .visualizer-bg {
+        background-image: radial-gradient(#334155 1px, transparent 1px);
+        background-size: 20px 20px;
+        display: flex; align-items: flex-end; justify-content: center;
+      }
+      .tank-col { width: 20%; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; z-index: 10; }
+      .tank-body {
+        width: 100%; height: 12rem; background: rgba(15, 23, 42, 0.9);
+        border-left: 1px solid #475569; border-right: 1px solid #475569; border-bottom: 1px solid #475569;
+        border-radius: 0 0 8px 8px; position: relative; overflow: hidden;
+      }
+      .water-level {
+        position: absolute; bottom: 0; left: 0; right: 0; background: var(--scada-accent); opacity: 0.8;
+        transition: height 0.5s ease-out;
+      }
+      .water-level.critical { background: var(--scada-danger); }
+      .pipe-connector {
+        height: 12rem; display: flex; flex-direction: column; justify-content: flex-end;
+        align-items: center; padding-bottom: 3.5rem; width: 3rem; margin: 0 -0.5rem;
+      }
+      .pipe-line {
+        height: 1rem; width: 3rem; background: var(--scada-bg);
+        border-top: 2px solid #475569; border-bottom: 2px solid #475569;
+        transition: all 0.3s;
+      }
+      .pipe-line.active { background: rgba(34, 197, 94, 0.2); border-color: var(--scada-success); }
+      .valve-circle {
+        width: 1.5rem; height: 1.5rem; border-radius: 50%; background: #0f172a;
+        border: 2px solid #64748b; margin-top: -1.25rem; z-index: 20;
+        display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+      }
+      .valve-circle.active { border-color: var(--scada-success); box-shadow: 0 0 8px var(--scada-success); }
+      .valve-bar { width: 2px; height: 12px; background: currentColor; transition: transform 0.3s; }
+      
+      /* Typography Helpers */
+      .font-mono { font-family: var(--font-mono); }
+      .text-xs { font-size: 0.75rem; }
+      .text-sm { font-size: 0.875rem; }
+      .text-xl { font-size: 1.25rem; }
+      .text-2xl { font-size: 1.5rem; }
+      .text-3xl { font-size: 1.875rem; }
+      .font-bold { font-weight: 700; }
+      .uppercase { text-transform: uppercase; }
+      .tracking-wider { letter-spacing: 0.05em; }
+      
+      .text-accent { color: var(--scada-accent); }
+      .text-success { color: var(--scada-success); }
+      .text-danger { color: var(--scada-danger); }
+      .text-warning { color: var(--scada-warning); }
+      .text-muted { color: var(--scada-muted); }
+      
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .animate-spin { animation: spin 1s linear infinite; }
+      .animate-pulse { animation: pulse 2s infinite; }
+      
+      /* Status Panels */
+      .status-box {
+        background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: 6px;
+        border: 1px solid rgba(51, 65, 85, 0.5); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center;
       }
     </style>
   <script type="importmap">

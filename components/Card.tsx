@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface CardProps {
@@ -9,18 +10,18 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ title, children, className = '', icon }) => {
   return (
-    <div className={`bg-scada-panel border border-scada-border rounded-lg shadow-lg overflow-hidden flex flex-col ${className}`}>
-      <div className="bg-slate-800/50 px-4 py-3 border-b border-scada-border flex items-center justify-between">
-        <h3 className="text-sm font-semibold tracking-wider text-scada-text uppercase font-mono flex items-center gap-2">
+    <div className={`scada-card ${className}`}>
+      <div className="card-header">
+        <h3 className="card-title">
           {icon}
           {title}
         </h3>
-        <div className="flex gap-1">
-           <div className="w-2 h-2 rounded-full bg-scada-border"></div>
-           <div className="w-2 h-2 rounded-full bg-scada-border"></div>
+        <div className="flex gap-2">
+           <div className="w-2 h-2 rounded-full" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#334155' }}></div>
+           <div className="w-2 h-2 rounded-full" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#334155' }}></div>
         </div>
       </div>
-      <div className="p-4 flex-1 relative">
+      <div className="card-body">
         {children}
       </div>
     </div>
